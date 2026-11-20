@@ -33,13 +33,6 @@ SECTIONS = [
  ("pj-work", "Khối lượng công việc", "Quản lý dự án", "Lập kế hoạch và ghi nhận công sức theo người. Dự án mẫu chưa có dữ liệu.",
   ["Bấm **Khối lượng công việc**.", "Bấm **Kế hoạch và ghi nhận** hoặc **Tạo khối lượng công việc** để thêm bản ghi.", "Lọc theo **Bảng**, **Trạng thái**, **Người sở hữu** ở cột trái."],
   [sh("pj-work", "**Kế hoạch và ghi nhận** công sức.", "**Tạo khối lượng công việc**.", "Bộ lọc **Bảng**.", "Bộ lọc **Trạng thái**.")]),
- ("pj-cost", "Chi phí và các khoản thu", "Quản lý dự án, kế toán", "Theo dõi tiền chi và thu của dự án. Dự án mẫu chưa ghi nhận khoản nào.",
-  ["**Chi phí**: bấm **Thêm chi phí**, chọn danh mục, trạng thái (Đã lên kế hoạch, Đã cam kết, Đã ghi nhận), ngày, số tiền.", "**Các khoản thu**: bấm **Thêm khoản thu**, chọn loại, trạng thái (Bản nháp, Đã xuất hoá đơn, Quá hạn, Đã nhận), đến hạn, số tiền.", "Dòng tổng ở đầu trang cộng theo trạng thái."],
-  [sh("pj-cost", "**Thêm chi phí**.", "Tổng chi phí và 3 trạng thái.", "Thẻ lọc theo trạng thái.", "Nhóm theo **Danh mục**."),
-   sh("pj-rev", "**Thêm khoản thu**.", "Tổng khoản thu và 3 trạng thái.", "Thẻ lọc theo trạng thái.", "Nhóm theo **Loại**.")]),
- ("pj-pl", "Báo cáo lãi lỗ", "Quản lý dự án", "Doanh thu trừ chi phí trực tiếp ra lợi nhuận gộp. Chỉ có số khi đã nhập khoản thu và chi phí.",
-  ["Bấm **Báo cáo lãi lỗ**.", "Chọn kỳ: **Toàn thời gian, Năm, Quý, Tháng**.", "Đọc 3 số: **Doanh thu**, **Chi phí trực tiếp**, **Lợi nhuận gộp**; kéo xuống để xem bảng chi tiết.", "Bấm **Xuất** để tải báo cáo."],
-  [sh("pj-pl", "Chọn kỳ báo cáo.", "**Xuất** báo cáo.", "Doanh thu, chi phí trực tiếp, lợi nhuận gộp.", "Biên lợi nhuận gộp so với mục tiêu 35%.")]),
  ("pj-recur", "Công việc lặp lại", "Quản lý dự án", "Tự tạo công việc theo chu kỳ. Dự án mẫu có **Báo cáo ngày**, tạo hàng ngày vào bảng Tasks, giao cho Base Support.",
   ["Bấm **Lặp lại** ở thanh trái.", "Mỗi dòng cho biết chu kỳ, bảng, người nhận và **kỳ kế tiếp**.", "Bấm **Công việc lặp lại mới** để tạo lịch mới, hoặc **Nhập** để nhập hàng loạt.", "Dùng biểu tượng tạm dừng, sửa, nhân bản, xoá ở cuối dòng."],
   [sh("pj-recur", "**Công việc lặp lại mới**.", "Dòng lịch: Hàng ngày, Tasks, Base Support, kỳ kế tiếp 21/11/2026.", "**Nhập** nhiều lịch một lần.", "Nút chạy ngay, tạm dừng, sửa, nhân bản, xoá.")]),
@@ -57,7 +50,6 @@ SECTIONS = [
 FAQ = [
  ("Tôi không thấy dự án **Hợp đồng Mẫu**", "Bạn chưa là người sở hữu hay thành viên. Nhờ người sở hữu thêm tên bạn ở **Cài đặt → Nhân sự**.", "pj-set"),
  ("Công việc đang **quá hạn** màu đỏ", "Hạn chốt đã qua mà chưa **Hoàn thành**. Mở công việc, xử lý rồi đổi Trạng thái, hoặc đặt hạn mới.", "pj-task"),
- ("Báo cáo lãi lỗ toàn **0 ₫**", "Chưa nhập **Chi phí** hoặc **Khoản thu** cho dự án. Nhập ở hai mục này thì báo cáo tự có số.", "pj-cost"),
  ("Muốn công việc xuất hiện **mỗi ngày**", "Dùng **Lặp lại**: tạo lịch hàng ngày. Dự án mẫu đã có lịch Báo cáo ngày.", "pj-recur"),
  ("Không bấm được **Thêm công việc**", "Cần là thành viên hoặc người sở hữu dự án. Kiểm tra ở Cài đặt → Nhân sự.", "pj-tform"),
 ]
@@ -82,7 +74,7 @@ def pane():
     return f'''<section class="tabpane" id="pane-project" data-tab="project" hidden>
 <div class="hero"><div class="eyebrow">HƯỚNG DẪN SỬ DỤNG · BASE PROJECT · DỰ ÁN CÔNG TY</div>
 <h1>Project · Hợp đồng Mẫu</h1>
-<p class="lead">Quản lý dự án **Hợp đồng Mẫu** (mã HNAD1): **công việc** theo nhóm, **lộ trình**, **tiến độ**, chi phí, thu và **báo cáo lãi lỗ**.</p>
+<p class="lead">Quản lý dự án **Hợp đồng Mẫu** (mã HNAD1): **công việc** theo nhóm, **lộ trình**, **tiến độ**, lịch lặp và **cài đặt** dự án.</p>
 <div class="path"><a href="#project-pj-list">① Vào dự án</a><a href="#project-steps">② Làm theo từng mục</a><a href="#project-faq">③ Gặp vấn đề?</a></div>
 <div class="kpis"><div class="kpi"><b>14</b><span>công việc</span></div><div class="kpi"><b>5</b><span>cách xem Tasks</span></div><div class="kpi"><b>9</b><span>thành viên</span></div><div class="kpi"><b>{len(SECTIONS)}</b><span>mục hướng dẫn</span></div></div>
 <p class="hint">Dữ liệu đọc từ project.base.vn ngày 20/11/2026. <a class="golink" href="{URL}" target="_blank" rel="noopener">Mở dịch vụ Dự án công ty ↗</a></p></div>
@@ -91,9 +83,9 @@ def pane():
 <h2 id="project-faq"><span class="sn">2</span>Gặp vấn đề?</h2>
 <div class="probs">{faq}</div>
 <h2><span class="sn">3</span>Dữ liệu mẫu để xem thử</h2>
-<div class="note"><ul><li>Dự án <b>Hợp đồng Mẫu</b> (HNAD1): 14 công việc, 5 gói công việc, nhóm Phòng QS và Phòng KHĐT.</li><li>Lịch lặp <b>Báo cáo ngày</b> tạo công việc hàng ngày.</li><li>Chi phí, khoản thu, khối lượng công việc, tự động hoá: chưa có dữ liệu (đang để trống).</li></ul>
+<div class="note"><ul><li>Dự án <b>Hợp đồng Mẫu</b> (HNAD1): 14 công việc, 5 gói công việc, nhóm Phòng QS và Phòng KHĐT.</li><li>Lịch lặp <b>Báo cáo ngày</b> tạo công việc hàng ngày.</li><li>Khối lượng công việc, tự động hoá: chưa có dữ liệu (đang để trống).</li></ul>
 <p class="goto">Làm theo: <a class="golink" href="{URL}" target="_blank" rel="noopener">Mở Base Project ↗</a></p></div>
 </section>'''
 
 CARD = ('<a class="svc" href="#project" data-tabgo="project"><div class="k">Base Project</div><h4>Project · Hợp đồng Mẫu</h4>'
-        '<p>Quản lý **công việc**, **lộ trình**, tiến độ, chi phí và **lãi lỗ** của dự án.</p><span class="golink">Xem hướng dẫn →</span></a>')
+        '<p>Quản lý **công việc**, **lộ trình**, tiến độ và lịch lặp của dự án.</p><span class="golink">Xem hướng dẫn →</span></a>')
