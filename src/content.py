@@ -13,17 +13,17 @@ PROCESSES = [
   lead="Ban chỉ huy lập **Yêu cầu cấp vật tư**, Ban Giám đốc **ký duyệt**, rồi Phòng Kế hoạch và NV Mua hàng xử lý và **chia đợt mua hàng**.",
   rows=[
    [dict(id="s1", n="1", t="Yêu cầu cấp vật tư", who="Ban chỉ huy", kind="manual")],
-   [dict(id="s2", n="2", t="Phê duyệt yêu cầu", who="Ban Giám đốc", kind="sign", reject="s1")],
+   [dict(id="s2", n="2", t="Phê duyệt yêu cầu", who="Phạm Thị Hồng Minh (Trợ lý CT HĐQT)", kind="sign", reject="s1")],
    [dict(id="s3", n="3", t="Tiếp nhận, kiểm tra và xử lý YCCVT", who="Phòng Kế hoạch", kind="manual")],
    [dict(id="s4", n="4", t="Nhân viên Mua hàng tiếp nhận", who="NV Mua hàng", kind="manual")],
    [dict(id="s5", n="5", t="Phân chia mua hàng", who="NV Mua hàng", kind="sub")],
   ],
   steps={
-   "s1": dict(do="Lập yêu cầu cấp vật tư cho dự án và gửi lên Ban Giám đốc.",
-     how=["Bấm **Công việc mới** góc phải trên, chọn dịch vụ QT-01.", "Nhập **Tiêu đề** (ví dụ: tên đợt, vật tư, dự án) và các trường của phiếu.", "Bấm **Tạo công việc** rồi **Submit** (hoặc nút tên bước kế tiếp trên thẻ) để gửi sang bước 2."],
+   "s1": dict(do="Lập yêu cầu cấp vật tư cho dự án, tạo yêu cầu ký và gửi lên Ban Giám đốc.",
+     how=["Bấm **Công việc mới** góc phải trên (xem ảnh form bên dưới), điền và bấm **Tạo công việc**.", "Mở thẻ vừa tạo, bấm **Trình ký: Phê duyệt yêu cầu (Ban Giám đốc)** để tạo yêu cầu ký.", "Bấm **Submit** để chuyển sang bước 2."],
      done="Thẻ chuyển sang cột **2. Phê duyệt yêu cầu**."),
-   "s2": dict(do="Ban Giám đốc xem phiếu và ký duyệt. Thẻ hiện tiến độ ký, ví dụ **Đã ký 0/1**.",
-     how=["Mở thẻ trong cột 2, đọc nội dung và tệp đính kèm.", "Bấm **Trình ký** để ký; chọn **Đã ký** để đi tiếp hoặc **Từ chối** để dừng phiếu.", "Khi đủ số người ký, phiếu tự sang bước 3."],
+   "s2": dict(do="Bước chạy tự động: hệ thống chờ Ban Giám đốc ký. Thẻ hiện tiến độ ký, ví dụ **Đã ký 0/1**. Người ký là người được giao ở bước này.",
+     how=["Người làm phiếu không cần thao tác, chỉ theo dõi khung xanh **Đang chờ ... đã ký x/y**.", "Người ký mở tài liệu và ký (hoặc từ chối) theo yêu cầu ký đã gửi.", "Đủ chữ ký thì phiếu tự sang bước 3 và tệp PDF đã ký được ghi vào phiếu."],
      done="Số ký đạt đủ (ví dụ 1/1) và phiếu sang bước 3. Từ chối: phiếu kết thúc với nhãn **Bị từ chối**."),
    "s3": dict(do="Phòng Kế hoạch tiếp nhận, kiểm tra và xử lý yêu cầu cấp vật tư.",
      how=["Mở thẻ ở cột 3, kiểm tra thông tin yêu cầu.", "Bổ sung hoặc chỉnh trường cần thiết.", "Bấm **Submit** để chuyển NV Mua hàng."],
@@ -31,8 +31,8 @@ PROCESSES = [
    "s4": dict(do="Nhân viên Mua hàng nhận yêu cầu và chuẩn bị phân chia các đợt mua hàng.",
      how=["Mở thẻ ở cột 4, xác nhận đã nhận.", "Bấm **Submit** để sang bước phân chia mua hàng."],
      done="Thẻ sang cột **Phân chia mua hàng**."),
-   "s5": dict(do="Tách yêu cầu thành các **công việc con** (phiếu yêu cầu vật tư, **Đợt Mua hàng**) và theo dõi tiến độ, ví dụ **Đã xong 1/2**.",
-     how=["Trên thẻ, bấm **Đợt Mua hàng** để tạo công việc con cho từng đợt.", "Khi danh sách đợt đã đủ, bấm **Chốt danh sách**.", "Theo dõi số công việc con đã xong trên thẻ cha."],
+   "s5": dict(do="Tách yêu cầu thành các **công việc con** (**Đợt Mua hàng**) và theo dõi tiến độ, ví dụ **Đã xong 1/2**.",
+     how=["Trên thẻ, bấm **Đợt Mua hàng** để tạo công việc con cho từng đợt.", "Khi danh sách đợt đã đủ, bấm **Chốt danh sách** (góc phải trên màn hình chi tiết).", "Theo dõi số công việc con đã xong ở khung xanh."],
      done="Tất cả công việc con hoàn thành thì phiếu sang **End**. Nếu có công việc con bị huỷ, lưu đồ đi nhánh **Có công việc con bị huỷ**."),
   },
   faq=[
@@ -159,9 +159,9 @@ PROCESSES = [
   ],
   steps={
    "s1": dict(do="Phòng/ban gửi tờ trình tạm ứng (T/Ư), thanh toán (TT) hoặc bảo lãnh thanh toán (BLTT) cho nhà cung cấp. Bước này có thời hạn **1 ngày**.",
-     how=["Bấm **Công việc mới**, chọn QT06, nhập tiêu đề (ví dụ: Đề nghị thanh toán lần 1).", "Trên thẻ, bấm nút **Ký Tờ trình TT, TƯ** hoặc **Submit** để gửi duyệt."], done="Thẻ sang cột **Kiểm soát & Phê duyệt**."),
-   "s2": dict(do="Người kiểm soát và phê duyệt ký tờ trình. Thẻ hiện **Đã ký 0/1**.",
-     how=["Mở thẻ, đọc tờ trình và tệp đính kèm.", "Chọn **Đã ký** để duyệt hoặc **Từ chối** để trả về bước 1."], done="Đủ chữ ký thì sang Phòng TCTH. Từ chối thì trả về phòng/ban gửi."),
+     how=["Bấm **Công việc mới**, điền form (xem ảnh bên dưới) rồi **Tạo công việc**.", "Mở thẻ, bấm **Trình ký: Ký Tờ trình TT, TƯ** để tạo yêu cầu ký.", "Bấm **Submit** để gửi sang Kiểm soát & Phê duyệt."], done="Thẻ sang cột **Kiểm soát & Phê duyệt**."),
+   "s2": dict(do="Bước chạy tự động: hệ thống chờ chữ ký của tờ trình. Thẻ hiện **Đã ký 0/1**.",
+     how=["Nếu còn bản nháp yêu cầu ký, bấm **Tiếp tục bản nháp**; tạo đủ yêu cầu ký rồi bấm **Chốt danh sách**.", "Người ký ký hoặc từ chối trên yêu cầu ký.", "Hệ thống xét kết quả và chuyển bước."], done="Đủ chữ ký thì sang Phòng TCTH. Từ chối thì trả về phòng/ban gửi."),
    "s3": dict(do="Phòng TCTH lưu trữ hồ sơ và tổng hợp.",
      how=["Mở thẻ, lưu trữ hồ sơ.", "Bấm **Submit** để kết thúc."], done="Thẻ sang **End**, trạng thái **Đã hoàn thành**."),
   },
@@ -192,3 +192,35 @@ PROCESSES = [
   samples=["Chưa có công việc thật. Xem phần Dữ liệu mẫu bên dưới."],
  ),
 ]
+
+
+# ---- Ảnh thao tác (đã ghim số) ----
+EXTRA = {
+ "qt01": dict(
+  form=dict(img="qt01-form", pins=["Nhập **Tiêu đề** (tên đợt, vật tư, dự án).", "Chọn **Dự án** trong danh sách.", "Đính kèm **Phiếu yêu cầu cấp vật tư (BM-01.1)**; có phát sinh thì đính thêm BM-01.2.", "Nhập **Bảng Vật tư yêu cầu** (Tên, Ghi chú, File đính kèm), bấm **Thêm dòng**.", "Bấm **Tạo công việc** (hoặc **Lưu nháp** để làm tiếp sau)."]),
+  shots=dict(
+   s1=dict(img="qt01-s1", pins=["Bấm **Trình ký: Phê duyệt yêu cầu (Ban Giám đốc)** để tạo yêu cầu ký. Nếu còn bản nháp, bấm **Tiếp tục bản nháp** ở khung CẦN BẠN TRÌNH KÝ.", "Bấm **Submit** để chuyển bước.", "Thanh bước cho biết đang ở bước nào và bước kế tiếp.", "Dữ liệu và tệp của phiếu (Hợp đồng, BM-01.1, Bảng vật tư): bấm biểu tượng bút để sửa.", "Thanh Thời gian báo **Quá hạn** nếu trễ; bấm bút để đổi hạn."]),
+   s2=dict(img="qt01-s2", pins=["Khung xanh báo **Đang chờ Phê duyệt yêu cầu (Ban Giám đốc) · đã ký 0/1**. Bước này tự chạy, không cần bấm gì.", "Người ký được giao: **Phạm Thị Hồng Minh** (Trợ lý CT HĐQT).", "Sau khi ký, tệp PDF đã ký hiện ở mục **Do kết quả ký ghi**.", "Thanh bước đang dừng ở bước 3 Phê duyệt yêu cầu."]),
+   s5=dict(img="qt01-s5", pins=["Bấm **Chốt danh sách** khi đã tạo đủ **Đợt Mua hàng**.", "Khung xanh báo tiến độ, ví dụ **Đang chờ Đợt Mua hàng · đã xong 1/2**.", "Bảng Vật tư yêu cầu chuyển từ phiếu gốc (2 hàng).", "Người phụ trách bước: **Trần Đình Thái** (NV)."]),
+  )),
+ "qt02": dict(
+  form=dict(img="qt02-form", pins=["Nhập **Tiêu đề**.", "Chọn **Dự án**.", "Đính kèm **Phiếu yêu cầu mua hàng**.", "Bấm **Tạo công việc**."]),
+  shots=dict(
+   s2=dict(img="qt02-s2", pins=["Nếu bạn không phải người được giao, màn hình ghi **Hiện bạn không phải làm gì ở bước này**, kèm tên người đang xử lý.", "Thanh bước: đang ở bước 2, kế tiếp là **Phê duyệt NCC**, rồi rẽ nhánh 1 trong 2.", "Các trường cập nhật tại bước này: Dự án, Hợp đồng, Hợp đồng mua bán, **Báo giá của nhà cung cấp**.", "Người được giao bước: **Trần Đình Thái** (NV)."]),
+  )),
+ "qt03": dict(
+  form=dict(img="qt03-form", pins=["Nhập **Tiêu đề**.", "Chọn **Dự án**.", "Đính kèm **Bộ hồ sơ** thanh toán.", "Bấm **Chọn tệp** để thêm **Biên bản giao nhận**.", "Bấm **Tạo công việc**."]),
+  shots={}),
+ "qt05": dict(
+  form=dict(img="qt05-form", pins=["Nhập **Tiêu đề**.", "Nhập số **Hợp đồng**.", "Đính kèm **Yêu cầu thanh toán**.", "Bấm **Tạo công việc**."]),
+  shots={}),
+ "qt06": dict(
+  form=dict(img="qt06-form", pins=["Nhập **Tiêu đề** (ví dụ: Đề nghị thanh toán lần 1).", "Chọn **Dự án**.", "Chọn **Nhà cung cấp**.", "Đính kèm **Tờ trình Đề nghị TT, TƯ** và **Giấy tờ kèm theo** (hoá đơn, hợp đồng...).", "Bấm **Tạo công việc**. Các trường còn lại (Nội dung thanh toán, Tài khoản, Giá trị hợp đồng, Giá trị thực hiện...) có thể điền sau."]),
+  shots=dict(
+   s1=dict(img="qt06-s1", pins=["Bấm **Trình ký: Ký Tờ trình TT, TƯ** để tạo yêu cầu ký.", "Bấm **Submit** để chuyển sang bước Kiểm soát & Phê duyệt.", "Thanh bước: đang ở bước 2, kế tiếp là Kiểm soát & Phê duyệt.", "Các trường dữ liệu: Dự án, Nhà cung cấp, Giấy tờ kèm theo... bấm bút để sửa.", "Người được giao xử lý bước này."]),
+   s2=dict(img="qt06-s2", pins=["Nếu còn bản nháp, bấm **Tiếp tục bản nháp** ở khung CẦN BẠN TRÌNH KÝ.", "Khung xanh: **Đang chờ Ký Tờ trình TT, TƯ · đã ký 0/1**. Bước chạy tự động.", "Bấm **Chốt danh sách** khi đã tạo đủ yêu cầu ký để hệ thống xét kết quả.", "Thanh bước đang ở bước 3 Kiểm soát & Phê duyệt."]),
+  )),
+ "qt07": dict(
+  form=dict(img="qt07-form", pins=["Nhập **Tiêu đề**.", "Bấm **Chọn bản ghi** ở mục **Dự án**.", "Nhập **Hợp đồng**.", "Đính kèm **File Đề nghị thanh toán**.", "Bấm **Tạo công việc**."]),
+  shots={}),
+}

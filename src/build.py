@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import base64, html, json, re, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from content import PROCESSES
+from content import PROCESSES, EXTRA
 
 HERE = os.path.dirname(__file__)
 ROOT = os.path.dirname(HERE)
@@ -59,19 +59,32 @@ def flow_svg(p):
     out.append('</svg>')
     return "".join(out)
 
+def pinfig(sh, cap):
+    pins = "".join(f"<li><i class='pin'>{i+1}</i><span>{md(t)}</span></li>" for i, t in enumerate(sh["pins"]))
+    return (f'<figure class="shot big"><img data-k="{sh["img"]}" alt=""><figcaption>{cap} · bấm để phóng to</figcaption></figure>'
+            f'<ol class="pinlist">{pins}</ol>')
+
 def step_cards(p):
+    ex = EXTRA.get(p["id"], {})
     out = []
+    if ex.get("form"):
+        out.append(f'''<article class="step wide k-ev" id="{p["id"]}-form"><div class="sh"><span class="sn2">B0</span><div><h4>Tạo công việc mới</h4>
+<div class="pills"><span class="chip ev">Làm việc</span><span class="chip">👤 Người khởi tạo</span></div></div></div>
+<p class="do">Bấm <b>Công việc mới</b> ở góc phải trên của dịch vụ {html.escape(p["code"])}, điền theo ảnh rồi bấm <b>Tạo công việc</b>.</p>
+{pinfig(ex["form"], "Form Công việc mới trên BPM")}
+<p class="goto">Làm theo: <a class="golink" href="{p["url"]}" target="_blank" rel="noopener">Mở {html.escape(p["code"])} trên BPM ↗</a></p></article>''')
     for r in p["rows"]:
         for n in r:
             s = p["steps"][n["id"]]
             lab, cls = KIND[n["kind"]]
             how = "".join(f"<li>{md(h)}</li>" for h in s["how"])
-            out.append(f'''<article class="step k-{cls}" id="{p["id"]}-{n["id"]}">
+            out.append(f'''<article class="step k-{cls}{' wide' if n['id'] in ex.get('shots', {}) else ''}" id="{p["id"]}-{n["id"]}">
 <div class="sh"><span class="sn2">{html.escape(n["n"])}</span><div><h4>{html.escape(n["t"])}</h4>
 <div class="pills"><span class="chip {cls}">{lab}</span><span class="chip">👤 {html.escape(n["who"])}</span></div></div></div>
 <p class="do">{md(s["do"])}</p>
 <h5>Cách làm</h5><ol>{how}</ol>
 <p class="done"><b>Xong bước khi:</b> {md(s["done"])}</p>
+{pinfig(ex["shots"][n["id"]], "Màn hình xử lý bước") if n["id"] in ex.get("shots", {}) else ""}
 <p class="goto">Làm theo: <a class="golink" href="{p["url"]}" target="_blank" rel="noopener">Mở {html.escape(p["code"])} trên BPM ↗</a></p>
 </article>''')
     return "\n".join(out)
