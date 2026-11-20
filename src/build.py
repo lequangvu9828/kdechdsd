@@ -2,6 +2,7 @@
 import base64, html, json, re, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from content import PROCESSES, EXTRA
+import project
 
 HERE = os.path.dirname(__file__)
 ROOT = os.path.dirname(HERE)
@@ -141,7 +142,7 @@ def overview():
 <h1>6 quy trình <span class="grad">BPM</span> của Kinh Đô</h1>
 <p class="lead">Chọn quy trình trên thanh phía trên. Mỗi tab có **lưu đồ**, **hướng dẫn từng bước** và **tình huống thường gặp**.</p>
 <div class="kpis"><div class="kpi"><b>6</b><span>quy trình</span></div><div class="kpi"><b>3</b><span>nhóm dịch vụ</span></div><div class="kpi"><b>{TOT}</b><span>bước xử lý</span></div><div class="kpi"><b>{SG}</b><span>bước ký / duyệt</span></div></div></div>
-<h2><span class="sn">1</span>Chọn quy trình</h2><div class="grid3">{"".join(cards)}</div>
+<h2><span class="sn">1</span>Chọn quy trình</h2><div class="grid3">{"".join(cards)}{project.CARD.replace('**','')}</div>
 <h2><span class="sn">2</span>Cách đọc tài liệu</h2>
 <div class="note"><p>① <b>Lưu đồ</b>: các bước theo thứ tự, màu theo loại bước. ② <b>Làm theo từng bước</b>: ai làm, bấm gì, khi nào xong. ③ <b>Gặp vấn đề?</b>: triệu chứng và cách xử lý. Mỗi mục có link mở đúng màn hình trên BPM.</p></div>
 <div class="note po"><p><b>Cần xác nhận với Quản trị:</b> người phụ trách cụ thể từng bước, trường bắt buộc và SLA được cấu hình trong <b>Cài đặt dịch vụ</b>. Tài liệu ghi theo bộ phận lấy từ tên bước.</p></div>
@@ -153,9 +154,9 @@ def main():
         k = os.path.splitext(f)[0]
         imgs[k] = "data:image/jpeg;base64," + base64.b64encode(open(os.path.join(HERE, "img", f), "rb").read()).decode()
     tpl = open(os.path.join(HERE, "template.html"), encoding="utf-8").read()
-    tabs = [("home", "Tổng quan")] + [(p["id"], f'{p["code"]} · {p["name"]}'.replace("Theo dõi hồ sơ thanh toán Tổ đội, Nhà thầu phụ", "Theo dõi hồ sơ TT")) for p in PROCESSES]
+    tabs = [("home", "Tổng quan")] + [(p["id"], f'{p["code"]} · {p["name"]}'.replace("Theo dõi hồ sơ thanh toán Tổ đội, Nhà thầu phụ", "Theo dõi hồ sơ TT")) for p in PROCESSES] + [("project", "Project · Hợp đồng Mẫu")]
     tabbar = "".join(f'<button class="tabbtn" data-tab="{i}">{html.escape(t)}</button>' for i, t in tabs)
-    panes = overview() + "\n".join(tab(p, i) for i, p in enumerate(PROCESSES))
+    panes = overview() + "\n".join(tab(p, i) for i, p in enumerate(PROCESSES)) + project.pane()
     out = (tpl.replace("{{TABBAR}}", tabbar).replace("{{PANES}}", panes)
               .replace("{{IMGS}}", json.dumps(imgs)))
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(out)
