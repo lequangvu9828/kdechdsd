@@ -84,7 +84,7 @@ def step_cards(p):
 <p class="do">{md(s["do"])}</p>
 <h5>Cách làm</h5><ol>{how}</ol>
 <p class="done"><b>Xong bước khi:</b> {md(s["done"])}</p>
-{pinfig(ex["shots"][n["id"]], "Màn hình xử lý bước") if n["id"] in ex.get("shots", {}) else ""}
+{"".join(pinfig(x, "Màn hình xử lý bước") for x in ex["shots"][n["id"]]) if n["id"] in ex.get("shots", {}) else ""}
 <p class="goto">Làm theo: <a class="golink" href="{p["url"]}" target="_blank" rel="noopener">Mở {html.escape(p["code"])} trên BPM ↗</a></p>
 </article>''')
     return "\n".join(out)
