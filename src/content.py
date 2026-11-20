@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -- coding: utf-8 --
 """Nội dung HDSD 6 quy trình trên BPM (đọc từ hệ thống bpm.base.vn ngày 20/11/2026)."""
 
 BASE = "https://bpm.base.vn/service/"
@@ -134,7 +134,7 @@ PROCESSES = [
    "s1": dict(do="Tạo yêu cầu thanh toán. Bước có thời hạn **1 ngày**. Sau Submit, hệ thống tách thành hai nhánh làm song song.",
      how=["Bấm **Công việc mới**, nhập Tiêu đề, Hợp đồng, đính kèm Yêu cầu thanh toán.", "Mở thẻ, bấm **Submit** rồi xác nhận."], done="Hai thẻ xuất hiện đồng thời ở Nghiệm thu thiết bị và Nhận khối lượng."),
    "s2": dict(do="Nghiệm thu thiết bị (nhánh 2a). Trường cập nhật: **File nghiệm thu thiết bị**.", how=["Mở thẻ, đính kèm **File nghiệm thu thiết bị**.", "Bấm **Submit**, xác nhận."], done="Chờ nhánh 2b xong thì hai nhánh tự gộp."),
-   "s3": dict(do="Xác nhận khối lượng thi công của chỉ huy công trường (nhánh 2b). Bước này không có trường nhập.", how=["Chọn bước **Nhận khối lượng Thi công chỉ huy công trường** ở khung Các bước thực hiện.", "Bấm **Submit**; hộp thoại ghi *Bước này không cần nhập thông tin*."], done="Cả 2a và 2b xong thì gộp nhánh."),
+   "s3": dict(do="Xác nhận khối lượng thi công của chỉ huy công trường (nhánh 2b). Bước này không có trường nhập.", how=["Chọn bước **Nhận khối lượng Thi công chỉ huy công trường** ở khung Các bước thực hiện.", "Bấm **Submit**; hộp thoại ghi Bước này không cần nhập thông tin."], done="Cả 2a và 2b xong thì gộp nhánh."),
    "m1": dict(do="Hệ thống tự gộp hai nhánh. Màn hình hiện **Các nhánh: 1 trên 2 nhánh đã đến, đang chờ thêm 1**.", how=["Không có thao tác. Nếu thẻ chưa đi tiếp, xử lý nhánh còn lại."], done="Mở hai thẻ song song ở bước 3."),
    "s4": dict(do="Lập hồ sơ quản lý chất lượng (nhánh 3a). Trường: **Hồ sơ quản lý chất lượng**.", how=["Mở thẻ, đính kèm hồ sơ.", "Bấm **Submit**."], done="Chờ nhánh 3b."),
    "s5": dict(do="Lập hồ sơ giá trị thanh toán (nhánh 3b). Trường: **Lập Hồ sơ Giá trị thanh toán**.", how=["Mở thẻ, đính kèm hồ sơ.", "Bấm **Submit**."], done="Cả hai nhánh xong thì gộp."),
@@ -222,7 +222,7 @@ EXTRA = {
  "qt05": dict(
   form=sh("qt05-form", "Nhập **Tiêu đề**.", "Nhập số **Hợp đồng**.", "Đính kèm **Yêu cầu thanh toán**.", "Bấm **Tạo công việc**."),
   shots=dict(
-   s1=[sh("qt05-s1", "Bấm **Submit** để tách hai nhánh song song.", "Thanh bước: đang ở bước 2 Yêu cầu thanh toán.", "Thanh Thời gian: bước có hạn **1 ngày** (ghi *Còn 1 ngày*).", "Dữ liệu phiếu: Hợp đồng, Yêu cầu thanh toán.")],
+   s1=[sh("qt05-s1", "Bấm **Submit** để tách hai nhánh song song.", "Thanh bước: đang ở bước 2 Yêu cầu thanh toán.", "Thanh Thời gian: bước có hạn **1 ngày** (ghi Còn 1 ngày).", "Dữ liệu phiếu: Hợp đồng, Yêu cầu thanh toán.")],
    s2=[sh("qt05-par", "Bấm **Submit** để hoàn thành nhánh A.", "Thanh bước báo **Nhánh A trong 2 · 1 đang xử lý**.", "Khung Các bước thực hiện liệt kê 2 nhánh, nhãn **Đến lượt bạn** là nhánh bạn phải làm.", "Điền **File nghiệm thu thiết bị**.")],
    m1=[sh("qt05-merge", "Khung **Các nhánh** cho biết tiến độ gộp.", "Thanh tiến độ: **1 trên 2 nhánh đã đến, đang chờ thêm 1**.", "Chip **Merge Branches** là bước gộp, chạy tự động.", "Dòng thông báo: bước chạy tự động.")],
    s4=[sh("qt05-pair2", "Bấm **Submit** khi xong hồ sơ của nhánh này.", "Hai chip đều ghi **Đến lượt bạn**: chọn nhánh cần làm.", "Điền **Lập Hồ sơ Giá trị thanh toán** (nhánh 3b) hoặc **Hồ sơ quản lý chất lượng** (nhánh 3a).", "Thời hạn còn lại của bước.")],

@@ -74,7 +74,7 @@ def pane():
     return f'''<section class="tabpane" id="pane-project" data-tab="project" hidden>
 <div class="hero"><div class="eyebrow">HƯỚNG DẪN SỬ DỤNG · BASE PROJECT · DỰ ÁN CÔNG TY</div>
 <h1>Project · Hợp đồng Mẫu</h1>
-<p class="lead">Quản lý dự án **Hợp đồng Mẫu** (mã HNAD1): **công việc** theo nhóm, **lộ trình**, **tiến độ**, lịch lặp và **cài đặt** dự án.</p>
+<p class="lead">Quản lý dự án <b>Hợp đồng Mẫu</b> (mã HNAD1): <b>công việc</b> theo nhóm, <b>lộ trình</b>, <b>tiến độ</b>, lịch lặp và <b>cài đặt</b> dự án.</p>
 <div class="path"><a href="#project-pj-list">① Vào dự án</a><a href="#project-steps">② Làm theo từng mục</a><a href="#project-faq">③ Gặp vấn đề?</a></div>
 <div class="kpis"><div class="kpi"><b>14</b><span>công việc</span></div><div class="kpi"><b>5</b><span>cách xem Tasks</span></div><div class="kpi"><b>9</b><span>thành viên</span></div><div class="kpi"><b>{len(SECTIONS)}</b><span>mục hướng dẫn</span></div></div>
 <p class="hint">Dữ liệu đọc từ project.base.vn ngày 20/11/2026. <a class="golink" href="{URL}" target="_blank" rel="noopener">Mở dịch vụ Dự án công ty ↗</a></p></div>
