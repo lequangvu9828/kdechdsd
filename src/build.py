@@ -15,14 +15,14 @@ KIND = {"manual": ("Làm việc", "ev"), "sign": ("Trình ký / duyệt", "po"),
         "sub": ("Công việc con", "app"), "merge": ("Gộp nhánh", "fd")}
 
 def flow_svg(p):
-    W, NW, NH, GAP = 640, 250, 58, 44
+    W, NW, NH, GAP = 760, 300, 58, 44
     rows = p["rows"]
     y = 20
     pos = {}
     for r in rows:
         k = len(r)
         for i, n in enumerate(r):
-            cx = W/2 if k == 1 else (W/2 - 150 + i*300)
+            cx = W/2 if k == 1 else (W/2 - 170 + i*340)
             pos[n["id"]] = (cx, y)
         y += NH + GAP
     H = y - GAP + 24
@@ -51,7 +51,7 @@ def flow_svg(p):
             x = cx - NW/2
             lab, cls = KIND[n["kind"]]
             t = n["t"]
-            if len(t) > 34: t = t[:33].rstrip() + "…"
+            if len(t) > 38: t = t[:37].rstrip() + "…"
             out.append(f'<a href="#{p["id"]}-{n["id"]}" class="node k-{cls}" data-go="{p["id"]}-{n["id"]}">'
                        f'<rect x="{x}" y="{ny}" width="{NW}" height="{NH}" rx="12"/>'
                        f'<text x="{x+14}" y="{ny+23}" class="nt">{html.escape(n["n"])} · {html.escape(t)}</text>'
