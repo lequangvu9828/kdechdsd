@@ -138,14 +138,27 @@ def overview():
     for p in PROCESSES:
         cards.append(f'<a class="svc" href="#{p["id"]}" data-tabgo="{p["id"]}"><div class="k">{html.escape(p["group"])}</div><h4>{html.escape(p["code"])} · {html.escape(p["name"])}</h4><p>{md(p["lead"])}</p><span class="golink">Xem hướng dẫn →</span></a>')
     return f'''<section class="tabpane" id="pane-home" data-tab="home">
-<div class="hero"><div class="eyebrow">HƯỚNG DẪN SỬ DỤNG · BASE BPM</div>
-<h1>6 quy trình <span class="grad">BPM</span> của Kinh Đô</h1>
-<p class="lead">Chọn quy trình trên thanh phía trên. Mỗi tab có **lưu đồ**, **hướng dẫn từng bước** và **tình huống thường gặp**.</p>
-<div class="kpis"><div class="kpi"><b>6</b><span>quy trình</span></div><div class="kpi"><b>3</b><span>nhóm dịch vụ</span></div><div class="kpi"><b>{TOT}</b><span>bước xử lý</span></div><div class="kpi"><b>{SG}</b><span>bước ký / duyệt</span></div></div></div>
-<h2><span class="sn">1</span>Chọn quy trình</h2><div class="grid3">{project.CARD.replace('**','')}{"".join(cards)}</div>
-<h2><span class="sn">2</span>Cách đọc tài liệu</h2>
-<div class="note"><p>① <b>Lưu đồ</b>: các bước theo thứ tự, màu theo loại bước. ② <b>Làm theo từng bước</b>: ai làm, bấm gì, khi nào xong. ③ <b>Gặp vấn đề?</b>: triệu chứng và cách xử lý. Mỗi mục có link mở đúng màn hình trên BPM.</p></div>
-<div class="note po"><p><b>Cần xác nhận với Quản trị:</b> người phụ trách cụ thể từng bước, trường bắt buộc và SLA được cấu hình trong <b>Cài đặt dịch vụ</b>. Tài liệu ghi theo bộ phận lấy từ tên bước.</p></div>
+<div class="hero"><div class="eyebrow">HƯỚNG DẪN SỬ DỤNG · CÔNG VIỆC TRÊN BASE · KINH ĐÔ</div>
+<h1>Làm <span class="grad">công việc</span> trên Base tại Kinh Đô</h1>
+<p class="lead">Mọi việc của Kinh Đô chạy trên hai app: <b>Project</b> cho công việc của dự án, <b>BPM</b> cho các quy trình có nhiều bước và nhiều người duyệt. Chọn tab phía trên để xem hướng dẫn từng phần.</p>
+<div class="kpis"><div class="kpi"><b>1</b><span>dự án mẫu (Project)</span></div><div class="kpi"><b>6</b><span>quy trình (BPM)</span></div><div class="kpi"><b>{TOT}</b><span>bước xử lý trong BPM</span></div><div class="kpi"><b>{SG}</b><span>bước ký / duyệt</span></div></div></div>
+
+<h2><span class="sn">1</span>Chọn việc bạn cần làm</h2><div class="grid3">{project.CARD.replace('**','')}{"".join(cards)}</div>
+
+<h2><span class="sn">2</span>Project và BPM khác nhau thế nào</h2>
+<div class="two">
+<div class="note"><p><b>Project (dự án)</b></p><ul><li>Công việc do nhóm tự lập và giao nhau, theo từng dự án.</li><li>Xem dạng bảng biểu, danh sách, bảng kéo thả, dòng thời gian, lịch.</li><li>Có lộ trình, tiến độ, công việc lặp lại hằng ngày.</li><li>Ví dụ: dự án <b>Hợp đồng Mẫu</b>.</li></ul></div>
+<div class="note po"><p><b>BPM (quy trình)</b></p><ul><li>Phiếu đi qua các bước cố định, mỗi bước có người được giao và thời hạn.</li><li>Có bước <b>trình ký</b>, <b>phê duyệt</b>, <b>công việc con</b>.</li><li>Bấm <b>Submit</b> để chuyển bước.</li><li>Ví dụ: Yêu cầu cấp vật tư, Mua hàng, Thanh toán.</li></ul></div></div>
+
+<h2><span class="sn">3</span>Một ngày làm việc với Base</h2>
+<div class="grid3">
+<div class="note"><p><b>① Nhận việc</b><br>Mở <b>Công việc của tôi</b> (Project) hoặc <b>Việc của tôi</b> (BPM) ở thanh trái để thấy việc được giao cho bạn.</p></div>
+<div class="note"><p><b>② Làm việc</b><br>Mở công việc, cập nhật thông tin, đính kèm tệp, bình luận. Với BPM, làm đúng bước của bạn rồi bấm <b>Submit</b>.</p></div>
+<div class="note"><p><b>③ Hoàn thành và theo dõi</b><br>Đổi trạng thái sang <b>Hoàn thành</b> (Project) hoặc để phiếu sang bước kế tiếp (BPM). Xem Nhật ký hoạt động hoặc lịch sử để biết ai đã làm gì.</p></div></div>
+
+<h2><span class="sn">4</span>Cách đọc tài liệu</h2>
+<div class="note"><p>Mỗi tab có <b>hướng dẫn từng bước</b> kèm ảnh chụp màn hình thật, số ① ② ③ trên ảnh khớp với danh sách bên dưới. Tab quy trình BPM có thêm <b>lưu đồ</b> và <b>tình huống thường gặp</b>. Mỗi mục có link <b>Làm theo</b> mở thẳng màn hình trên Base.</p></div>
+<div class="note po"><p><b>Cần xác nhận với Quản trị:</b> người phụ trách từng bước BPM, trường bắt buộc và thời hạn được cấu hình trong <b>Cài đặt dịch vụ</b>. Với bước trình ký, tài liệu cần gửi ký phải là tệp PDF hoặc Office đã đính kèm.</p></div>
 </section>'''
 
 def main():

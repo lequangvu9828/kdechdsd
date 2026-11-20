@@ -56,7 +56,7 @@ FAQ = [
 
 def md(s):
     import re
-    return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", re.sub(r"\*(.+?)\*", r"<i>\1</i>", html.escape(s)))
+    return re.sub(r"\*(.+?)\*", r"<i>\1</i>", re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", html.escape(s)))
 
 def fig(s):
     pins = "".join(f"<li><i class='pin'>{i+1}</i><span>{md(t)}</span></li>" for i, t in enumerate(s["pins"]))
